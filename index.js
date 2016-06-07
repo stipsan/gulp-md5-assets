@@ -3,7 +3,8 @@ var path = require('path')
 , through = require('through2')
 , crypto = require('crypto')
 , fs = require('fs')
-, glob = require('glob');
+, glob = require('glob')
+, escapeRegExp = require('escape-string-regexp');
 
 module.exports = function (size, ifile) {
     size = size | 0;
@@ -20,7 +21,7 @@ module.exports = function (size, ifile) {
         var d = calcMd5(file, size)
         , filename = path.basename(file.path)
         , relativepath = path.relative(file.base ,file.path)
-        , sub_namepath = relativepath.replace(new RegExp(filename) , "").split(path.sep).join('/')
+        , sub_namepath = relativepath.replace(new RegExp(escapeRegExp(filename)) , "").split(path.sep).join('/')
         , dir;
 
         if(file.path[0] == '.'){
@@ -34,7 +35,7 @@ module.exports = function (size, ifile) {
         ifile && glob(ifile,function(err, files){
             if(err) return console.log(err);
             files.forEach(function(ilist){
-              var result = fs.readFileSync(ilist,'utf8').replace(new RegExp(sub_namepath + filename), sub_namepath + md5_filename);
+              var result = fs.readFileSync(ilist,'utf8').replace(new RegExp(escapeRegExp(sub_namepath + filename)), sub_namepath + md5_filename);
                 fs.writeFileSync(ilist, result, 'utf8');
             })
         })

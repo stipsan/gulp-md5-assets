@@ -16,6 +16,7 @@
     "gulpplugin"
   ],
   "dependencies": {
+	"escape-string-regexp": "^1.0.5",
     "gulp-util": "~2.2.14",
     "through2": "^0.4.1",
     "glob": "^4.0.6"
