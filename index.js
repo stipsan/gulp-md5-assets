@@ -41,8 +41,6 @@ module.exports = function (size, ifile) {
             })
         })
 
-        file.path = path.join(dir, md5_filename);
-
         this.push(file);
         cb();
     }, function (cb) {
